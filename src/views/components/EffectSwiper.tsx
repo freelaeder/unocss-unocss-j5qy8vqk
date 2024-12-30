@@ -17,7 +17,7 @@ interface SwiperInstance {
 export default function App() {
 
   // 图片路径集合
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<string[]>([]);
   // 新增状态来追踪当前的索引
   const [currentIndex, setCurrentIndex] = useState(0);
   // 控制加载状态
@@ -164,20 +164,22 @@ export default function App() {
   const loadImages = async () => {
     const imageModules = import.meta.glob('@/assets/images/*.svg');
     const imagePaths = Object.keys(imageModules).sort((a, b) => {
-      const numA = parseInt(a.match(/(\d+)\.svg$/)[1]);
-      const numB = parseInt(b.match(/(\d+)\.svg$/)[1]);
+      const matchA = a.match(/(\d+)\.svg$/);
+      const numA = matchA ? parseInt(matchA[1]) : 0;
+      const matchB = b.match(/(\d+)\.svg$/);
+      const numB = matchB ? parseInt(matchB[1]) : 0;
       return numA - numB;
     });
 
     const loadedImages = [];
     for (const path of imagePaths) {
-      const module = await imageModules[path]();
+      const module = await imageModules[path]() as { default: string };
       loadedImages.push(module.default);
     }
 
     setImages(loadedImages);
     // 延迟 1 秒钟
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // await new Promise(resolve => setTimeout(resolve, 1000));
     // 数据加载完成后隐藏loading
     setLoading(false);
   };

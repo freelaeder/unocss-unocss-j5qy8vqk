@@ -6,22 +6,39 @@
   align-items: center;
   height: 100vh;
 }
-
-.spinner {
-  border: 8px solid #f3f3f3; /* 背景色 */
-  border-top: 8px solid #3498db; /* 旋转颜色 */
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 2s linear infinite;
+/* HTML: <div class="loader"></div> */
+.loader {
+  display: inline-grid;
+  width: 30px;
+  aspect-ratio: 1;
+  background: #574951;
+  animation: 
+    l12-0 4s steps(4) infinite,
+    l12-1 6s linear infinite;
 }
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.loader:before,
+.loader:after {
+  content: "";
+  grid-area: 1/1;
+  background: #83988E;
+  clip-path: polygon(100% 50%,65.45% 97.55%,9.55% 79.39%,9.55% 20.61%,65.45% 2.45%);
+  transform-origin: right;
+  translate: -100% 50%;
+  scale: 1.7;
+  animation: l12-2 1s linear infinite;
 }
-
-p {
-  margin-top: 10px;
-  font-size: 18px;
+.loader:after {
+  clip-path: polygon(90.45% 79.39%,34.55% 97.55%,0% 50%,34.55% 2.45%,90.45% 20.61%);
+  transform-origin: left;
+  translate: 100% -50%;
+}
+@keyframes l12-0 {
+  to{rotate: 1turn}
+}
+@keyframes l12-1 {
+  to{transform: rotate(1turn)}
+}
+@keyframes l12-2 {
+  0%{rotate:  36deg}
+  to{rotate: -126deg}
 }
