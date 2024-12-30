@@ -1,11 +1,5 @@
 .swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #fff;
+  @apply flex items-center justify-center rounded-lg font-bold text-white;
 }
 
 .swiper-slide:nth-child(1n) {
@@ -18,32 +12,40 @@
 
 .swiper-slide:nth-child(3n) {
   background-color: rgb(10, 184, 111);
+  background-size: contain;
 }
 
 .swiper-slide:nth-child(4n) {
   background-color: rgb(211, 122, 7);
+  background-size: contain;
 }
 
 .swiper-slide:nth-child(5n) {
   background-color: rgb(118, 163, 12);
+  background-size: contain;
 }
 
 .swiper-slide:nth-child(6n) {
   background-color: rgb(180, 10, 47);
+  background-size: contain;
 }
 
 .swiper-slide:nth-child(7n) {
   background-color: rgb(35, 99, 19);
+  background-size: contain;
 }
 
 .swiper-slide:nth-child(8n) {
   background-color: rgb(0, 68, 255);
+  background-size: contain;
 }
 
 .swiper-slide:nth-child(9n) {
   background-color: rgb(218, 12, 218);
+  background-size: contain;
 }
 
 .swiper-slide:nth-child(10n) {
   background-color: rgb(54, 94, 77);
+  background-size: contain;
 }
