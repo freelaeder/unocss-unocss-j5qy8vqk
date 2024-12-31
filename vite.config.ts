@@ -5,8 +5,9 @@ import React from '@vitejs/plugin-react'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 import { transformerDirectives } from 'unocss'
-import * as path from 'path'
 import presetWind from '@unocss/preset-wind'
+import { resolve } from 'path';
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -36,8 +37,8 @@ export default defineConfig({
   resolve: {
     // 类型：Record<string, string> | Array<{ find: string | RegExp, replacement: string }> 将会被传递到 @rollup/plugin-alias 作为它的 entries。
     alias: {
-      '~': path.join(__dirname, './'),
-      '@': path.join(__dirname, './src')
+      '~': resolve(__dirname, './'),
+      '@': resolve(__dirname, 'src')
     },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.mjs'] // 类型： string[] 导入时想要省略的扩展名列表。
   },

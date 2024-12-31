@@ -7,6 +7,7 @@ import 'swiper/css/effect-cards';
 // import required modules
 import { EffectCards } from 'swiper/modules';
 import Loading from './Loading';
+import ShortStoryPlayer from './ShortStoryPlayer';
 
 // 处理SwiperSlide的切换
 interface SwiperInstance {
@@ -20,6 +21,8 @@ export default function App() {
   const [images, setImages] = useState<string[]>([]);
   // 新增状态来追踪当前的索引
   const [currentIndex, setCurrentIndex] = useState(0);
+  // 用于追踪已加载图片的数量
+  const [loadedCount, setLoadedCount] = useState(0);
   // 控制加载状态
   const [loading, setLoading] = useState(true);
   // 图片名称及颜色参数
@@ -161,23 +164,27 @@ export default function App() {
     },
   ];
   // 按顺序加载图片和 JSON 数据
-  const loadImages = async () => {
+  const loadImages = async (startIndex: number, count: number) => {
     const imageModules = import.meta.glob('@/assets/images/*.svg');
-    const imagePaths = Object.keys(imageModules).sort((a, b) => {
-      const matchA = a.match(/(\d+)\.svg$/);
-      const numA = matchA ? parseInt(matchA[1]) : 0;
-      const matchB = b.match(/(\d+)\.svg$/);
-      const numB = matchB ? parseInt(matchB[1]) : 0;
-      return numA - numB;
-    });
+    const imagePaths = Object.keys(imageModules)
+      .sort((a, b) => {
+        const matchA = a.match(/(\d+)\.svg$/);
+        const numA = matchA ? parseInt(matchA[1]) : 0;
+        const matchB = b.match(/(\d+)\.svg$/);
+        const numB = matchB ? parseInt(matchB[1]) : 0;
+        return numA - numB;
+      })
+      .slice(startIndex, startIndex + count); // 根据 startIndex 和 count 获取图片路径
 
-    const loadedImages = [];
+    const loadedImages: string[] = [];
     for (const path of imagePaths) {
       const module = await imageModules[path]() as { default: string };
       loadedImages.push(module.default);
     }
 
-    setImages(loadedImages);
+    setImages(prevImages => [...prevImages, ...loadedImages]);
+    setLoadedCount(prevCount => prevCount + loadedImages.length);
+
     // 延迟 1 秒钟
     await new Promise(resolve => setTimeout(resolve, 1000));
     // 数据加载完成后隐藏loading
@@ -189,8 +196,16 @@ export default function App() {
   };
 
   useEffect(() => {
-    loadImages();
-  }, []);
+    // 首次加载 5 张图片
+    if (loadedCount === 0) {
+      loadImages(0, 5);
+    }
+    // 当 currentIndex 大于 3 时加载更多 5 张图片
+    else if (currentIndex > 3 && loadedCount <= currentIndex + 5) {
+      loadImages(loadedCount, 5);
+    }
+  }, [currentIndex, loadedCount]); // 当 currentIndex 或 loadedCount 变化时触发加载
+
 
   return (
     <>
@@ -221,7 +236,10 @@ export default function App() {
                 ))
               }
             </Swiper>
-            <div className='w-50vw max-w-55vw min-w-[300px] h-full bg-gray-100 mx-auto p-4 mt-4 text-white text-xl rounded' style={{ backgroundColor: imageParams[currentIndex].color, }}>
+            <div className='relative w-50vw max-w-55vw min-w-[300px] h-full bg-gray-100 mx-auto p-4 mt-4 text-white text-xl rounded' style={{ backgroundColor: imageParams[currentIndex].color, }}>
+              <div className='absolute bottom-0 right-0'>
+                <ShortStoryPlayer index={currentIndex} />
+              </div>
               <p>
                 {
                   imageParams[currentIndex].content
