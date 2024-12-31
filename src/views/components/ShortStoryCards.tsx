@@ -194,17 +194,17 @@ export default function App() {
   const handleSlideChange = (swiper: SwiperInstance): void => {
     setCurrentIndex(swiper.activeIndex); // 更新当前的索引
   };
-
   useEffect(() => {
     // 首次加载 5 张图片
     if (loadedCount === 0) {
-      loadImages(0, 5);
+      loadImages(0, 5); // 加载前 5 张
     }
-    // 当 currentIndex 大于 3 时加载更多 5 张图片
-    else if (currentIndex > 3 && loadedCount <= currentIndex + 5) {
-      loadImages(loadedCount, 5);
+    // 当 currentIndex 大于 2 时加载更多 5 张图片
+    else if (currentIndex > 2 && loadedCount <= currentIndex + 5) {
+      loadImages(loadedCount, 5); // 加载接下来的 5 张
     }
   }, [currentIndex, loadedCount]); // 当 currentIndex 或 loadedCount 变化时触发加载
+
 
 
   return (
