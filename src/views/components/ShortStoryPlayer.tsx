@@ -58,7 +58,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ index }) => {
   }
 
   return (
-    <div className="flex items-center justify-center p-2 bg-white bg-opacity-50 rounded-tl" onClick={togglePlay}>
+    <div className="flex items-center justify-center p-2 bg-white bg-opacity-50 rounded-tl cursor-pointer" onClick={togglePlay}>
       {/* 音频已经加载才渲染音频元素 */}
       <audio ref={audioRef} src={audioSrc} preload="auto" />
       {isPlaying ? (

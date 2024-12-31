@@ -186,7 +186,7 @@ export default function App() {
     setLoadedCount(prevCount => prevCount + loadedImages.length);
 
     // 延迟 1 秒钟
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // await new Promise(resolve => setTimeout(resolve, 1000));
     // 数据加载完成后隐藏loading
     setLoading(false);
   };
