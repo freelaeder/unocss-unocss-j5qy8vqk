@@ -228,7 +228,7 @@ export default function App() {
                     <div>
                       <h3 className="mt-2em animate-bounce-alt animate-duration-2s">
                         {
-                          imageParams?.[index].name
+                          imageParams?.[index]?.name
                         }
                       </h3>
                     </div>
