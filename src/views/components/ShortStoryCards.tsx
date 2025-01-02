@@ -216,19 +216,19 @@ export default function App() {
           <>
             <Swiper
               effect={'cards'}
-              grabCursor={true}
+              grabCursor={true} 
               modules={[EffectCards]}
               className="w-[240px] h-[320px] bg-gray-100 mt-2em"
               onSlideChange={handleSlideChange} // 监听滑动事件
             >
               {
                 images.map((image, index) => (
-                  <SwiperSlide key={index} className='flex flex-col items-center justify-center rounded-lg font-bold text-white' style={{ backgroundColor: imageParams[index].color }}>
+                  <SwiperSlide key={index} className='flex flex-col items-center justify-center rounded-lg font-bold text-white' style={{ backgroundColor: imageParams?.[index]?.color }}>
                     <img className='w-1/2 aspect-square rounded' src={image} alt={`Image ${index}`} />
                     <div>
                       <h3 className="mt-2em animate-bounce-alt animate-duration-2s">
                         {
-                          imageParams[index].name
+                          imageParams?.[index].name
                         }
                       </h3>
                     </div>
@@ -236,13 +236,13 @@ export default function App() {
                 ))
               }
             </Swiper>
-            <div className='relative w-50vw max-w-55vw min-w-[300px] h-full bg-gray-100 mx-auto p-4 mt-4 text-white text-xl rounded' style={{ backgroundColor: imageParams[currentIndex].color, }}>
+            <div className='relative w-50vw max-w-55vw min-w-[300px] h-full bg-gray-100 mx-auto p-4 mt-4 text-white text-xl rounded' style={{ backgroundColor: imageParams?.[currentIndex]?.color, }}>
               <div className='absolute bottom-0 right-0'>
                 <ShortStoryPlayer index={currentIndex} />
               </div>
               <p>
                 {
-                  imageParams[currentIndex].content
+                  imageParams?.[currentIndex]?.content
                 }
               </p>
             </div>
